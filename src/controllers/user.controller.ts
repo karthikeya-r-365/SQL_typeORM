@@ -30,10 +30,18 @@ const create_user = async (req: Request, res: Response) =>{
         let pass_code = bcrypt.hash(password, salt);
 
         let saved_data = await AppDataSource.getRepository(User).save({
-            
+            name: name,
+            user_phone_number: phoneNumber,
+            email: email,
+            passowrd: password
         })
         //.getRepository(User);
 
+        return res.status(201).send({
+            status:201,
+            data: saved_data,
+            message: "Document inserteed successfully"
+        })
 
 
     } catch (err : any) {

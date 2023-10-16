@@ -1,6 +1,21 @@
 import express,{Request, Response} from "express";
 import { AppDataSource } from "./DB/dataSource";
 
+import * as moment from 'moment-timezone';
+
+// Create a moment object in the Indian Standard Time zone (Asia/Kolkata)
+const istMoment = moment.tz('Asia/Kolkata');
+
+// Get the current date and time in IST
+const istTime = istMoment.format();
+
+console.log('Current time in IST:', istTime);
+
+// Optional: Format the timestamp in a specific way
+const formattedIST = istMoment.format('MMMM Do YYYY, h:mm:ss a');
+
+
+
 const app = express();
 const port : number = 5050;
 
@@ -19,7 +34,7 @@ app.get('/test', (req: Request, resp: Response) =>{
 app.use('*', (req: Request, res: Response) =>{
     return res.status(404).send({
         status:404,
-        data:{},
+        data:{formattedIST, istTime, istMoment  },
         message:'Not Found'
     })
 })
