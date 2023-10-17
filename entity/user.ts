@@ -1,7 +1,12 @@
 import { Entity, Column, PrimaryGeneratedColumn} from "typeorm";
 
+import * as moment from 'moment-timezone';
 
+// Create a moment object in the Indian Standard Time zone (Asia/Kolkata)
+const istMoment = moment.tz('Asia/Kolkata');
 
+// Get the current date and time in IST
+const istTime = istMoment.format();
 
 /*
     @Entity() -> This decorator is used to mark classes that will be an entity (table or document depend on database type). Database schema will be created for all classes decorated with it, and Repository can be retrieved and used for it.
@@ -44,7 +49,9 @@ export class User {
     @Column()
     passowrd! : String;
 
-    @Column()
+    @Column({
+        default: istTime
+    })
     created_at! : Date
 
     @Column({
